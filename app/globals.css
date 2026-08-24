@@ -1,9 +1,72 @@
 @import "tailwindcss";
 
+:root,
+html[data-theme="light"] {
+  --background: #ecebe9;
+  --surface: #f7f6f4;
+  --surface-muted: #e3e2df;
+  --foreground: #1b1a1b;
+  --muted: #5c5a5b;
+  --faint: #6b6968;
+  --border: rgb(27 26 27 / 0.12);
+  --accent: #18747e;
+  --accent-hover: #125e66;
+  --cta: #74c4cd;
+  --cta-fg: #1b1a1b;
+  --hero: #1b1a1b;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --background: #1b1a1b;
+  --surface: #262425;
+  --surface-muted: #121112;
+  --foreground: #ecebe9;
+  --muted: #a8a6a5;
+  --faint: #8e8c8b;
+  --border: rgb(236 235 233 / 0.12);
+  --accent: #74c4cd;
+  --accent-hover: #9ad6dc;
+  --cta: #74c4cd;
+  --cta-fg: #1b1a1b;
+  --hero: #1b1a1b;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-theme="dark"]),
+  html[data-theme="system"] {
+    --background: #1b1a1b;
+    --surface: #262425;
+    --surface-muted: #121112;
+    --foreground: #ecebe9;
+    --muted: #a8a6a5;
+    --faint: #8e8c8b;
+    --border: rgb(236 235 233 / 0.12);
+    --accent: #74c4cd;
+    --accent-hover: #9ad6dc;
+    --cta: #74c4cd;
+    --cta-fg: #1b1a1b;
+    --hero: #1b1a1b;
+    color-scheme: dark;
+  }
+}
+
 @theme inline {
-  --font-sans: var(--font-manrope);
-  --color-background: #111418;
-  --color-foreground: #e8ecef;
+  --font-sans: var(--font-geologica);
+  --font-display: var(--font-geologica);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
+  --color-hero: var(--hero);
   --animate-hero-marquee: hero-marquee 110s linear infinite;
 }
 
@@ -15,15 +78,21 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
-  background: #111418;
-  color: #e8ecef;
-  font-family: var(--font-manrope), system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geologica), system-ui, sans-serif;
+  font-variation-settings: "SHRP" 12;
+}
+
+.font-display {
+  font-variation-settings: "SHRP" 72;
 }
 
 ::selection {
-  background: #8fd4d4;
-  color: #111418;
+  background: #74c4cd;
+  color: #1b1a1b;
 }

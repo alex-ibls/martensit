@@ -1,118 +1,145 @@
-import { site } from "@/lib/site";
+import { faqItems } from "@/lib/faq";
+import { offerServices } from "@/lib/services";
+import { absoluteUrl, site } from "@/lib/site";
 
-export function JsonLd() {
-  const data = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": ["LocalBusiness", "Manufacturer"],
-        "@id": `${site.siteUrl}/#org`,
-        name: site.brand,
-        alternateName: site.h1,
-        slogan: site.tagline,
-        description: site.description,
-        url: site.siteUrl,
-        email: site.email,
-        telephone: site.phoneHref.replace("tel:", ""),
-        sameAs: [site.telegramUrl, site.maxUrl],
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: site.city,
-          addressRegion: site.region,
-          addressCountry: "RU",
-        },
-        areaServed: [
-          {
-            "@type": "Country",
-            name: site.country,
-          },
-          {
-            "@type": "City",
-            name: site.city,
-          },
-        ],
-        makesOffer: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Производство и монтаж светопрозрачных конструкций",
-              description:
-                "Изготовление в Воронеже, монтаж светопрозрачных конструкций на алюминиевых и ПВХ системах по всей России. Объём производства 2 500–3 000 м² в месяц.",
-            },
-          },
-          {
-            "@type": "Service",
-            name: "Фасадное остекление и входные группы",
-            description:
-              "Алюминиевые светопрозрачные конструкции: фасады, входные группы, панорамное остекление.",
-          },
-          {
-            "@type": "Service",
-            name: "Замер и проектирование светопрозрачных конструкций",
-            description:
-              "Сложные архитектурные решения и типовые задачи. Выезд на объект по России.",
-          },
-          {
-            "@type": "Service",
-            name: "Ремонт и обслуживание светопрозрачных конструкций",
-            description:
-              "Диагностика, ремонт алюминиевых конструкций и окон ПВХ.",
-          },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "Работаете только в Воронеже?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Завод в Воронеже, объекты — по всей России. Замер, производство и монтаж согласовываем под задачу.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Как проходит замер светопрозрачных конструкций?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Выезжаем на объект клиента. Встреча и замер согласовываются отдельно.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Какой объём производства?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "2 500–3 000 м² светопрозрачных конструкций в месяц.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Можно заказать от производителя типовые окна?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Да. Делаем и архитектурные решения, и типовые окна ПВХ, двери, проёмы — изготовление и монтаж.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Есть ремонт и обслуживание уже стоящих конструкций?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Да. Ремонт и обслуживание светопрозрачных конструкций: диагностика, ремонт алюминиевых систем и окон ПВХ.",
-            },
-          },
-        ],
-      },
-    ],
-  };
-
+function JsonLdScript({ data }: { data: unknown }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
+
+function organizationNode() {
+  const orgId = `${site.siteUrl}/#org`;
+  const phone = site.phoneHref.replace("tel:", "");
+
+  return {
+    "@type": ["LocalBusiness", "Manufacturer"],
+    "@id": orgId,
+    name: site.orgName,
+    alternateName: site.brand,
+    legalName: site.legalName,
+    taxID: site.inn,
+    slogan: site.tagline,
+    description: site.description,
+    url: site.siteUrl,
+    image: absoluteUrl(site.ogImage),
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl(site.logo),
+    },
+    email: site.email,
+    telephone: phone,
+    sameAs: [site.telegramUrl],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: site.city,
+      addressRegion: site.region,
+      addressCountry: "RU",
+    },
+    areaServed: [
+      { "@type": "Country", name: site.country },
+      { "@type": "City", name: site.city },
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: phone,
+      email: site.email,
+      contactType: "sales",
+      areaServed: "RU",
+      availableLanguage: "Russian",
+    },
+    makesOffer: offerServices.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.name,
+        description: service.description,
+        provider: { "@id": orgId },
+        areaServed: site.country,
+      },
+    })),
+  };
+}
+
+export function JsonLd() {
+  const orgId = `${site.siteUrl}/#org`;
+
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          organizationNode(),
+          {
+            "@type": "WebSite",
+            "@id": `${site.siteUrl}/#website`,
+            url: site.siteUrl,
+            name: site.orgName,
+            inLanguage: "ru-RU",
+            publisher: { "@id": orgId },
+          },
+          {
+            "@type": "FAQPage",
+            "@id": `${site.siteUrl}/#faq`,
+            inLanguage: "ru-RU",
+            mainEntity: faqItems.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          },
+        ],
+      }}
+    />
+  );
+}
+
+export function PrivacyJsonLd() {
+  const orgId = `${site.siteUrl}/#org`;
+  const pageUrl = absoluteUrl("/privacy");
+
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          organizationNode(),
+          {
+            "@type": "WebPage",
+            "@id": `${pageUrl}#webpage`,
+            url: pageUrl,
+            name: "Политика обработки персональных данных",
+            inLanguage: "ru-RU",
+            isPartOf: { "@id": `${site.siteUrl}/#website` },
+            about: { "@id": orgId },
+          },
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: site.brand,
+                item: site.siteUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Политика обработки персональных данных",
+                item: pageUrl,
+              },
+            ],
+          },
+        ],
+      }}
     />
   );
 }

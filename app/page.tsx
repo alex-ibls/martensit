@@ -20,7 +20,7 @@ export default function Home() {
     <>
       <JsonLd />
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <Capacity />
         <Pillars />

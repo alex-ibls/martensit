@@ -8,14 +8,6 @@ export function TelegramIcon({ className }: { className?: string }) {
   );
 }
 
-export function MaxIcon({ className }: { className?: string }) {
-  return (
-    // Official MAX mark from brand assets (max.ru / Wikimedia vector of the app icon)
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src="/max-icon.svg" alt="" className={className} />
-  );
-}
-
 export function MessengerLinks({
   className = "",
   compact = false,
@@ -23,39 +15,20 @@ export function MessengerLinks({
   className?: string;
   compact?: boolean;
 }) {
-  const items = [
-    {
-      href: messengerHref(site.telegramUrl),
-      label: "Telegram",
-      icon: TelegramIcon,
-      iconClass: "h-4 w-4",
-      external: Boolean(site.telegramUrl),
-    },
-    {
-      href: messengerHref(site.maxUrl),
-      label: "MAX",
-      icon: MaxIcon,
-      iconClass: "h-5 w-5",
-      external: Boolean(site.maxUrl),
-    },
-  ];
+  const href = messengerHref(site.telegramUrl);
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {items.map((item) => (
-        <a
-          key={item.label}
-          href={item.href}
-          {...(item.external
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : undefined)}
-          className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-zinc-100 transition hover:border-teal-300/40 hover:bg-white/10"
-        >
-          <item.icon className={item.iconClass} />
-          {compact ? null : <span>{item.label}</span>}
-          {compact ? <span className="sr-only">{item.label}</span> : null}
-        </a>
-      ))}
+      <a
+        href={href}
+        {...(site.telegramUrl
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : undefined)}
+        className="inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-md border border-border bg-surface px-3 text-sm text-foreground transition hover:border-accent/40 hover:bg-surface-muted"
+      >
+        <TelegramIcon className="h-4 w-4" />
+        {compact ? <span className="sr-only">Telegram</span> : <span>Telegram</span>}
+      </a>
     </div>
   );
 }

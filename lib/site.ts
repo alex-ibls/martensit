@@ -1,16 +1,32 @@
+function envText(name: string) {
+  return process.env[name]?.trim() || "";
+}
+
+function envCounterId(name: string) {
+  const value = envText(name);
+  return /^\d+$/.test(value) ? value : "";
+}
+
 export const site = {
   brand: "Мартенсит",
   tagline: "завод светопрозрачных конструкций",
-  legalName: "Мартенсит",
+  orgName: "Завод светопрозрачных конструкций Мартенсит",
+  legalName: "ООО «Мартенсит»",
+  inn: "3628021590",
+  ogrn: "1213600030930",
+  kpp: "362801001",
   city: "Воронеж",
   region: "Воронежская область",
   country: "Россия",
   coverage: "по всей России",
   capacity: "2 500–3 000 м²",
+  logo: "/brand/lockup.png",
+  logoMark: "/brand/mark.png",
+  ogImage: "/og/cover.jpg",
   title:
     "Производство и монтаж светопрозрачных конструкций по России — завод Мартенсит, Воронеж",
   description:
-    "Завод светопрозрачных конструкций в Воронеже. Изготовление и монтаж на алюминии и ПВХ по всей России. Замер, проект, входные группы, фасады, окна. Заказать от производителя.",
+    "Завод светопрозрачных конструкций в Воронеже. Производство и монтаж на алюминии и ПВХ по всей России, замер, проектирование, сервис действующих конструкций. Объём 2 500–3 000 м² в месяц.",
   h1: "Мартенсит — завод светопрозрачных конструкций",
   keywords: [
     "светопрозрачные конструкции",
@@ -26,15 +42,36 @@ export const site = {
     "входные группы",
     "окна ПВХ от производителя",
   ],
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
+    /\/$/,
+    "",
+  ),
   email: "info@martensit-group.ru",
   phone: "+7 980 544-28-13",
   phoneHref: "tel:+79805442813",
   telegramUrl: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/+79805442813",
-  maxUrl:
-    process.env.NEXT_PUBLIC_MAX_URL ||
-    "https://max.ru/u/f9LHodD0cOKjSvFzylsc-JTXQtUCXMxiJflXuIc9r2MZAzkjWJ7lyp7B3PU",
+  yandexMetrikaId: envCounterId("NEXT_PUBLIC_YANDEX_METRIKA_ID") || "111903056",
+  yandexVerification:
+    envText("NEXT_PUBLIC_YANDEX_VERIFICATION") || envText("YANDEX_VERIFICATION"),
+  googleVerification:
+    envText("NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION") ||
+    envText("GOOGLE_SITE_VERIFICATION"),
+  leadChannels: ["phone", "telegram", "email"] as const,
 } as const;
+
+export function absoluteUrl(path = "/") {
+  if (path === "/" || path === "") return site.siteUrl;
+  return `${site.siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function isPublicSiteUrl() {
+  try {
+    const { hostname } = new URL(site.siteUrl);
+    return hostname !== "localhost" && hostname !== "127.0.0.1";
+  } catch {
+    return false;
+  }
+}
 
 export const nav = [
   { href: "#proizvodstvo", label: "Производство" },
