@@ -27,7 +27,7 @@ export const site = {
     "окна ПВХ от производителя",
   ],
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  email: "semen.morgunov@inbox.ru",
+  email: "info@martensit-group.ru",
   phone: "+7 980 544-28-13",
   phoneHref: "tel:+79805442813",
   telegramUrl: process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/+79805442813",
