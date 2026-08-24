@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-manrope);
+  --color-background: #111418;
+  --color-foreground: #e8ecef;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #111418;
+  color: #e8ecef;
+  font-family: var(--font-manrope), system-ui, sans-serif;
+}
+
+::selection {
+  background: #8fd4d4;
+  color: #111418;
+}
