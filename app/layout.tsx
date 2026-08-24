@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.brand}`,
   },
   description: site.description,
+  keywords: [...site.keywords],
   alternates: {
     canonical: "/",
   },

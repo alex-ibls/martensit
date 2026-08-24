@@ -9,7 +9,9 @@ export function Footer() {
         <div>
           <p className="font-semibold text-zinc-50">{site.brand}</p>
           <p className="mt-1 text-sm text-zinc-400">{site.tagline}</p>
-          <p className="mt-1 text-sm text-zinc-400">{site.city}</p>
+          <p className="mt-1 text-sm text-zinc-400">
+            {site.city} · {site.coverage}
+          </p>
           <a
             href={site.phoneHref}
             className="mt-2 block text-sm text-teal-200 hover:text-teal-100"
@@ -23,7 +25,7 @@ export function Footer() {
             {site.email}
           </a>
           <p className="mt-3 text-sm text-zinc-500">
-            Замер и встреча — по согласованию.
+            Замер и встреча — по согласованию, объекты по всей России.
           </p>
         </div>
         <nav className="flex flex-col gap-2 text-sm text-zinc-300" aria-label="Подвал">
@@ -39,7 +41,8 @@ export function Footer() {
         <MessengerLinks />
       </div>
       <p className="mx-auto mt-8 max-w-6xl px-4 text-xs text-zinc-600 sm:px-6">
-        © {new Date().getFullYear()} {site.brand} — {site.tagline}.
+        © {new Date().getFullYear()} {site.brand}. Производство в Воронеже,
+        монтаж светопрозрачных конструкций по всей России.
       </p>
     </footer>
   );

@@ -8,7 +8,6 @@ import {
   Design,
   Faq,
   Hero,
-  Lead,
   Pillars,
   Portfolio,
   Process,
@@ -31,7 +30,6 @@ export default function Home() {
         <Audiences />
         <Process />
         <Portfolio />
-        <Lead />
         <Faq />
         <Contacts />
       </main>
