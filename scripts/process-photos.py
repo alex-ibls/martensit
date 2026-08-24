@@ -175,6 +175,51 @@ def save_jpg(path: Path, bgr: np.ndarray) -> None:
     cv2.imwrite(str(path), bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
 
 
+# Pixel boxes on the processed JPGs (x1, y1, x2, y2).
+PLATE_BOXES = {
+    "03-mural-street": (28, 612, 102, 640),
+}
+DRIVER_BOXES = {
+    "03-mural-street": (0, 482, 150, 592),
+}
+
+
+def paint_plate(bgr: np.ndarray, box: tuple[int, int, int, int]) -> None:
+    x1, y1, x2, y2 = box
+    sample = bgr[max(0, y1 - 14) : y1, x1:x2]
+    if sample.size:
+        color = tuple(int(c) for c in sample.mean(axis=(0, 1)))
+    else:
+        color = (28, 28, 28)
+    cv2.rectangle(bgr, (x1, y1), (x2, y2), color, thickness=-1)
+    pad = 3
+    ry1, ry2 = max(0, y1 - pad), min(bgr.shape[0], y2 + pad)
+    rx1, rx2 = max(0, x1 - pad), min(bgr.shape[1], x2 + pad)
+    bgr[ry1:ry2, rx1:rx2] = cv2.GaussianBlur(bgr[ry1:ry2, rx1:rx2], (5, 5), 0)
+
+
+def blur_driver(bgr: np.ndarray, box: tuple[int, int, int, int]) -> None:
+    x1, y1, x2, y2 = box
+    roi = bgr[y1:y2, x1:x2]
+    blurred = cv2.GaussianBlur(roi, (71, 71), 0)
+    blurred = cv2.GaussianBlur(blurred, (71, 71), 0)
+    h, w = roi.shape[:2]
+    mask = np.zeros((h, w), np.float32)
+    inset = 6
+    cv2.rectangle(mask, (inset, inset), (max(w - inset - 1, inset), max(h - inset - 1, inset)), 1, -1)
+    mask = cv2.GaussianBlur(mask, (15, 15), 0)[:, :, None]
+    roi[:] = (blurred * mask + roi * (1.0 - mask)).astype(np.uint8)
+
+
+def redact_privacy(name: str, bgr: np.ndarray) -> np.ndarray:
+    out = bgr.copy()
+    if name in PLATE_BOXES:
+        paint_plate(out, PLATE_BOXES[name])
+    if name in DRIVER_BOXES:
+        blur_driver(out, DRIVER_BOXES[name])
+    return out
+
+
 def main() -> None:
     DEST.mkdir(parents=True, exist_ok=True)
     for old in DEST.glob("*"):
@@ -199,7 +244,7 @@ def main() -> None:
     print("target LAB", target.tolist())
 
     for dest_name, img in processed:
-        unified = match_to_target(img, target)
+        unified = redact_privacy(dest_name, match_to_target(img, target))
         save_jpg(DEST / f"{dest_name}.jpg", unified)
 
     dusk = next(img for name, img in processed if name == "18-house-dusk")

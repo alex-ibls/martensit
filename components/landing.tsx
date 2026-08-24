@@ -4,8 +4,6 @@ import { site } from "@/lib/site";
 import { portfolio } from "@/lib/portfolio";
 import { MessengerLinks } from "@/components/Messengers";
 
-const heroTiles = [...portfolio, portfolio[14], portfolio[17]];
-
 function Section({
   id,
   children,
@@ -22,22 +20,42 @@ function Section({
   );
 }
 
+function HeroCollage({
+  copy,
+  priority = false,
+}: {
+  copy: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className="grid h-full w-1/2 shrink-0 grid-cols-4 grid-rows-6 gap-px lg:grid-cols-6 lg:grid-rows-4">
+      {portfolio.map((item, index) => (
+        <div
+          key={`${copy}-${item.src}`}
+          className={`relative overflow-hidden ${index >= 20 ? "col-span-2" : ""}`}
+        >
+          <Image
+            src={item.src}
+            alt=""
+            fill
+            priority={priority && index < 12}
+            className="object-cover"
+            sizes="(max-width: 1024px) 50vw, 33vw"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Hero() {
   return (
     <section id="top" className="relative h-[88vh] min-h-[36rem] overflow-hidden">
-      <div className="absolute inset-0 grid grid-cols-4 grid-rows-6 gap-px bg-[#111418] lg:grid-cols-6 lg:grid-rows-4">
-        {heroTiles.map((item, index) => (
-          <div key={`${item.src}-${index}`} className="relative overflow-hidden">
-            <Image
-              src={item.src}
-              alt=""
-              fill
-              priority={index < 12}
-              className="object-cover"
-              sizes="(max-width: 1024px) 25vw, 17vw"
-            />
-          </div>
-        ))}
+      <div className="absolute inset-0 overflow-hidden bg-[#111418]" aria-hidden>
+        <div className="flex h-full w-[200%] will-change-transform animate-hero-marquee motion-reduce:animate-none">
+          <HeroCollage copy="a" priority />
+          <HeroCollage copy="b" />
+        </div>
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-[#111418] via-[#111418]/88 to-[#111418]/55" />
       <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-24">

@@ -4,6 +4,13 @@
   --font-sans: var(--font-manrope);
   --color-background: #111418;
   --color-foreground: #e8ecef;
+  --animate-hero-marquee: hero-marquee 110s linear infinite;
+}
+
+@keyframes hero-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 html {
