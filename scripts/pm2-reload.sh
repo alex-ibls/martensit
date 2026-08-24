@@ -17,4 +17,4 @@ fi
 echo "→ Запуск через pm2 на порту 3002…"
 pm2 startOrReload "$ROOT/ecosystem.config.cjs" --update-env
 pm2 status martensit
-echo "Сайт: http://localhost:3002"
+echo "Сайт: http://0.0.0.0:3002"
