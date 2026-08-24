@@ -6,6 +6,14 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { MessengerLinks } from "@/components/Messengers";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M7.2 3.8h3.1l1 3.2-1.9 1.2a12.4 12.4 0 0 0 6.4 6.4l1.2-1.9 3.2 1v3.1c0 .6-.5 1.2-1.1 1.2A16.2 16.2 0 0 1 3.8 5c0-.6.5-1.2 1.2-1.2Z" />
+    </svg>
+  );
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
 
@@ -33,9 +41,11 @@ export function Header() {
           </a>
           <a
             href={site.phoneHref}
-            className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md border border-border bg-surface px-3 text-sm text-foreground hover:border-accent/40 sm:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition hover:border-accent/40 sm:hidden"
+            aria-label={`Позвонить ${site.phone}`}
+            title={site.phone}
           >
-            Позвонить
+            <PhoneIcon />
           </a>
           <ThemeToggle />
           <div className="hidden lg:block xl:hidden">
