@@ -9,8 +9,8 @@ export const leadClients = [
   { value: "company", label: "Компания" },
 ] as const;
 
-const taskValues = new Set(leadTasks.map((item) => item.value));
-const clientValues = new Set(leadClients.map((item) => item.value));
+const taskValues = new Set<string>(leadTasks.map((item) => item.value));
+const clientValues = new Set<string>(leadClients.map((item) => item.value));
 
 export function isRuPhone(value: string) {
   const digits = value.replace(/\D/g, "");
