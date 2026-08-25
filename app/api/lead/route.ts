@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyCaptcha } from "@/lib/captcha";
 import {
   leadClientLabel,
   leadTaskLabel,
@@ -23,6 +24,10 @@ export async function POST(request: Request) {
   }
   if (parsed.spam) {
     return NextResponse.json({ ok: true });
+  }
+
+  if (!verifyCaptcha(body.captchaToken, body.captcha)) {
+    return NextResponse.json({ error: "captcha" }, { status: 400 });
   }
 
   const text = [

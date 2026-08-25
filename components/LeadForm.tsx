@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { MessengerLinks } from "@/components/Messengers";
 import { isRuPhone, leadClients, leadTasks } from "@/lib/lead";
@@ -9,9 +9,29 @@ import { site } from "@/lib/site";
 const fieldClass =
   "rounded-md border border-border bg-background px-3 py-2 text-foreground outline-none focus:border-accent";
 
+type CaptchaChallenge = {
+  token: string;
+  svg: string;
+};
+
 export function LeadForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const [error, setError] = useState("");
+  const [captcha, setCaptcha] = useState<CaptchaChallenge | null>(null);
+
+  const loadCaptcha = useCallback(async () => {
+    const res = await fetch("/api/captcha", { cache: "no-store" });
+    if (!res.ok) throw new Error("captcha");
+    const data = (await res.json()) as CaptchaChallenge;
+    if (!data.token || !data.svg) throw new Error("captcha");
+    setCaptcha(data);
+  }, []);
+
+  useEffect(() => {
+    loadCaptcha().catch(() => {
+      setError("Не удалось загрузить проверку. Обновите страницу.");
+    });
+  }, [loadCaptcha]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,10 +44,15 @@ export function LeadForm() {
     const task = String(data.get("task") || "");
     const comment = String(data.get("comment") || "").trim();
     const website = String(data.get("website") || "").trim();
+    const captchaAnswer = String(data.get("captcha") || "").trim();
     const consent = data.get("consent") === "on";
 
     if (!name || !isRuPhone(phone) || !client || !task || !consent) {
       setError("Укажите имя, телефон в формате +7 или 8xxxxxxxxxx и отметьте согласие.");
+      return;
+    }
+    if (!captcha?.token || !captchaAnswer) {
+      setError("Введите символы с картинки.");
       return;
     }
 
@@ -36,11 +61,31 @@ export function LeadForm() {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, client, task, comment, website }),
+        body: JSON.stringify({
+          name,
+          phone,
+          client,
+          task,
+          comment,
+          website,
+          captchaToken: captcha.token,
+          captcha: captchaAnswer,
+        }),
       });
-      if (!res.ok) throw new Error("fail");
-      setStatus("ok");
-      form.reset();
+      const payload = (await res.json().catch(() => ({}))) as { error?: string };
+      if (res.ok) {
+        setStatus("ok");
+        form.reset();
+        return;
+      }
+      if (payload.error === "captcha") {
+        setError("Неверные символы. Введите заново.");
+        form.querySelector<HTMLInputElement>('input[name="captcha"]')?.select();
+        await loadCaptcha();
+        setStatus("idle");
+        return;
+      }
+      throw new Error("fail");
     } catch {
       setStatus("error");
       setError("Не удалось отправить. Позвоните, напишите на почту или в Telegram.");
@@ -109,6 +154,47 @@ export function LeadForm() {
         Комментарий
         <textarea name="comment" rows={3} className={fieldClass} />
       </label>
+      <div className="grid gap-2">
+        <span className="text-sm text-muted">Проверка</span>
+        <div className="flex items-center gap-2">
+          {captcha ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(captcha.svg)}`}
+              alt="Символы для проверки"
+              width={180}
+              height={56}
+              className="h-14 w-[180px] rounded-md border border-border bg-[#ecebe9]"
+            />
+          ) : (
+            <div className="h-14 w-[180px] rounded-md border border-border bg-background" />
+          )}
+          <button
+            type="button"
+            onClick={() => {
+              loadCaptcha().catch(() => {
+                setError("Не удалось обновить проверку.");
+              });
+            }}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:border-accent/40"
+            aria-label="Обновить картинку"
+            title="Обновить картинку"
+          >
+            <RefreshIcon />
+          </button>
+        </div>
+        <label className="grid gap-1 text-sm text-muted">
+          Символы с картинки
+          <input
+            name="captcha"
+            required
+            autoComplete="off"
+            spellCheck={false}
+            inputMode="text"
+            className={`${fieldClass} uppercase tracking-[0.2em]`}
+          />
+        </label>
+      </div>
       <label className="flex items-start gap-2 text-sm text-muted">
         <input name="consent" type="checkbox" required className="mt-1" />
         <span>
@@ -135,5 +221,14 @@ export function LeadForm() {
         {status === "loading" ? "Отправка…" : "Отправить заявку"}
       </button>
     </form>
+  );
+}
+
+function RefreshIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M20 12a8 8 0 1 1-2.2-5.5" />
+      <path d="M20 5v5h-5" />
+    </svg>
   );
 }
