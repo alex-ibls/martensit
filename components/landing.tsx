@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/lib/site";
 import { faqItems } from "@/lib/faq";
 import { portfolio } from "@/lib/portfolio";
@@ -35,7 +36,7 @@ function HeroCollage({
       {portfolio.map((item, index) => (
         <div
           key={`${copy}-${item.src}`}
-          className={`relative overflow-hidden ${index >= 20 ? "col-span-2" : ""}`}
+          className={`relative overflow-hidden ${index >= 18 ? "col-span-2" : ""}`}
         >
           <Image
             src={item.src}
@@ -379,6 +380,13 @@ export function Contacts() {
           >
             {site.email}
           </a>
+          <p>
+          <Link
+            href="/rekvizity"
+            className="mt-3 inline-block text-sm text-accent hover:text-accent-hover"
+          >
+            Реквизиты
+          </Link></p>
           <p className="mt-4 max-w-xl text-sm text-faint">
             Заявка на сайте, звонок, почта или Telegram. Замер, сервис и встреча
             — объекты по всей России.

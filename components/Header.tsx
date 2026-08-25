@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { nav, site } from "@/lib/site";
+import { nav, site, homeSectionHref } from "@/lib/site";
 import { BrandLogo } from "@/components/BrandLogo";
 import { MessengerLinks } from "@/components/Messengers";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -20,13 +20,13 @@ export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
-        <a href="#top" className="min-w-0 shrink">
+        <a href="/#top" className="min-w-0 shrink">
           <BrandLogo taglineClassName="hidden text-[11px] font-normal tracking-wide text-muted xl:block" />
         </a>
 
         <nav className="hidden items-center gap-4 text-sm text-muted lg:flex xl:gap-6" aria-label="Основное меню">
           {nav.map((item) => (
-            <a key={item.href} href={item.href} className="whitespace-nowrap hover:text-accent">
+            <a key={item.href} href={homeSectionHref(item.href)} className="whitespace-nowrap hover:text-accent">
               {item.label}
             </a>
           ))}
@@ -75,7 +75,7 @@ export function Header() {
             {nav.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={homeSectionHref(item.href)}
                 onClick={() => setOpen(false)}
                 className="min-h-11 py-2.5"
               >

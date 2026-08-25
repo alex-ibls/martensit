@@ -11,10 +11,19 @@ export const site = {
   brand: "Мартенсит",
   tagline: "завод светопрозрачных конструкций",
   orgName: "Завод светопрозрачных конструкций Мартенсит",
-  legalName: "ООО «Мартенсит»",
-  inn: "3628021590",
-  ogrn: "1213600030930",
-  kpp: "362801001",
+  legalName: "ООО «Магнит»",
+  inn: "3663144524",
+  ogrn: "1193668033932",
+  ogrnDate: "12.09.2019",
+  kpp: "366301001",
+  okpo: "41504348",
+  director: "Помельцов Дмитрий Владиславович",
+  bankName: "Центрально-Черноземный банк ПАО Сбербанк",
+  bankCity: "Воронеж",
+  bik: "042007681",
+  account: "40702810313000019181",
+  accountDisplay: "407 028 103 130 000 19181",
+  corrAccount: "30101810600000000681",
   city: "Воронеж",
   region: "Воронежская область",
   country: "Россия",
@@ -83,4 +92,24 @@ export const nav = [
 
 export function messengerHref(url: string) {
   return url || "#kontakty";
+}
+
+export function homeSectionHref(hash: string) {
+  return `/${hash.startsWith("#") ? hash : `#${hash}`}`;
+}
+
+export function requisitesText() {
+  return [
+    site.legalName,
+    `ИНН ${site.inn}`,
+    `КПП ${site.kpp}`,
+    `ОГРН ${site.ogrn}`,
+    `Дата регистрации ${site.ogrnDate}`,
+    `ОКПО ${site.okpo}`,
+    `Р/с ${site.account}`,
+    `Банк ${site.bankName}, г. ${site.bankCity}`,
+    `БИК ${site.bik}`,
+    `К/с ${site.corrAccount}`,
+    `Генеральный директор ${site.director}`,
+  ].join("\n");
 }

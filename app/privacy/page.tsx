@@ -52,7 +52,11 @@ export default function PrivacyPage() {
       <div className="mt-8 space-y-4 text-sm leading-7 text-muted">
         <p>
           Оператор: {site.legalName}, ИНН {site.inn}, КПП {site.kpp}, ОГРН{" "}
-          {site.ogrn}, {site.city}. Телефон:{" "}
+          {site.ogrn}, {site.city}.{" "}
+          <Link href="/rekvizity" className="text-accent underline underline-offset-2 hover:text-accent-hover">
+            Реквизиты
+          </Link>
+          . Телефон:{" "}
           <a href={site.phoneHref} className="text-accent underline underline-offset-2 hover:text-accent-hover">
             {site.phone}
           </a>

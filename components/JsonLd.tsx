@@ -24,6 +24,7 @@ function organizationNode() {
     alternateName: site.brand,
     legalName: site.legalName,
     taxID: site.inn,
+    foundingDate: "2019-09-12",
     slogan: site.tagline,
     description: site.description,
     url: site.siteUrl,

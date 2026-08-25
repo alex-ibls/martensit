@@ -90,11 +90,6 @@ export const portfolio = [
     caption: "ПВХ · типовой дом",
   },
   {
-    src: "/portfolio/19-glass-wall.jpg",
-    alt: "Стеклянный фасад на алюминиевом переплёте",
-    caption: "Алюминий · фасад",
-  },
-  {
     src: "/portfolio/20-entrance.jpg",
     alt: "Алюминиевая входная группа со стеклянными дверями",
     caption: "Алюминий · входная группа",

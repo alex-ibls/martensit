@@ -15,7 +15,7 @@ DEST = Path("/Users/bocharovalexander/Завод/public/portfolio")
 OG = Path("/Users/bocharovalexander/Завод/public/og/cover.jpg")
 MAX_EDGE = 1800
 
-# Strict set from the latest user batch (22 files).
+# Strict set from the latest user batch (21 files).
 SOURCES = [
     "5215290882897158414-d3380098-6285-4185-a5fd-d1a6b5e69aa8.png",
     "5215290882897158422-77e68966-beec-4fe8-a22c-beb6a323effd.png",
@@ -35,7 +35,6 @@ SOURCES = [
     "5215290882897158430-249a2294-b745-42fb-8856-392ede17bab3.png",
     "5215290882897158401-088364e8-1164-4266-b271-bf192167ddfe.png",
     "5215290882897158402-04617d3d-bac7-4ce1-949c-8ff78f7a2ffc.png",
-    "5215290882897158405-fa9ad7a1-b710-4106-9e3c-087ea21f20f6.png",
     "5215290882897158403-791cb0a4-4866-40ac-8fc9-92a6ca07b46d.png",
     "5215290882897158407-cde9e60a-1314-4156-b071-864b4ebbfca5.png",
     "5215290882897158404-b6617398-42ad-464e-8ad7-7a9fa8203d8a.png",
@@ -60,7 +59,6 @@ NAMES = [
     "16-brick-facade",
     "17-house-build",
     "18-house-dusk",
-    "19-glass-wall",
     "20-entrance",
     "21-pvc-window",
     "22-estate",

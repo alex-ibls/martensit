@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
-import { nav, site } from "@/lib/site";
+import { nav, site, homeSectionHref } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -14,10 +14,13 @@ export function Footer() {
         </div>
         <nav className="flex flex-col gap-2 text-sm text-muted" aria-label="Подвал">
           {nav.map((item) => (
-            <a key={item.href} href={item.href} className="hover:text-accent">
+            <a key={item.href} href={homeSectionHref(item.href)} className="hover:text-accent">
               {item.label}
             </a>
           ))}
+          <Link href="/rekvizity" className="hover:text-accent">
+            Реквизиты
+          </Link>
           <Link href="/privacy" className="hover:text-accent">
             Политика обработки персональных данных
           </Link>
