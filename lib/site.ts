@@ -56,7 +56,7 @@ export const site = {
   googleVerification:
     envText("NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION") ||
     envText("GOOGLE_SITE_VERIFICATION"),
-  leadChannels: ["phone", "telegram", "email"] as const,
+  leadChannels: ["form", "phone", "telegram", "email"] as const,
 } as const;
 
 export function absoluteUrl(path = "/") {

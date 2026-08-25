@@ -4,6 +4,7 @@ import { site } from "@/lib/site";
 import { faqItems } from "@/lib/faq";
 import { portfolio } from "@/lib/portfolio";
 import { BrandLogo } from "@/components/BrandLogo";
+import { LeadForm } from "@/components/LeadForm";
 import { MessengerLinks } from "@/components/Messengers";
 
 function Section({
@@ -293,7 +294,7 @@ export function Process() {
       <div className="mt-10 grid gap-8 md:grid-cols-2">
         <ol className="space-y-4 text-sm text-muted">
           <li className="text-xs uppercase tracking-wide text-accent">Новый объект</li>
-          <li>1. Звонок, почта или Telegram</li>
+          <li>1. Заявка на сайте, звонок, почта или Telegram</li>
           <li>2. Замер на объекте клиента</li>
           <li>3. Проект и согласование</li>
           <li>4. Производство</li>
@@ -301,7 +302,7 @@ export function Process() {
         </ol>
         <ol className="space-y-4 text-sm text-muted">
           <li className="text-xs uppercase tracking-wide text-accent">Сервис</li>
-          <li>1. Звонок или сообщение</li>
+          <li>1. Заявка, звонок или сообщение</li>
           <li>2. Диагностика</li>
           <li>3. Ремонт или обслуживание</li>
         </ol>
@@ -357,30 +358,35 @@ export function Faq() {
 export function Contacts() {
   return (
     <Section id="kontakty" className="bg-surface-muted pt-8">
-      <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">Контакты</h2>
-      <div className="mt-6">
-        <BrandLogo />
+      <div className="grid gap-10 md:grid-cols-2 md:items-start">
+        <div>
+          <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">Контакты</h2>
+          <div className="mt-6">
+            <BrandLogo />
+          </div>
+          <p className="mt-3 text-muted">
+            {site.city} · {site.coverage}
+          </p>
+          <a
+            href={site.phoneHref}
+            className="mt-3 block text-lg font-medium text-accent hover:text-accent-hover"
+          >
+            {site.phone}
+          </a>
+          <a
+            href={`mailto:${site.email}`}
+            className="mt-2 inline-block text-accent hover:text-accent-hover"
+          >
+            {site.email}
+          </a>
+          <p className="mt-4 max-w-xl text-sm text-faint">
+            Заявка на сайте, звонок, почта или Telegram. Замер, сервис и встреча
+            — объекты по всей России.
+          </p>
+          <MessengerLinks className="mt-6" />
+        </div>
+        <LeadForm />
       </div>
-      <p className="mt-3 text-muted">
-        {site.city} · {site.coverage}
-      </p>
-      <a
-        href={site.phoneHref}
-        className="mt-3 block text-lg font-medium text-accent hover:text-accent-hover"
-      >
-        {site.phone}
-      </a>
-      <a
-        href={`mailto:${site.email}`}
-        className="mt-2 inline-block text-accent hover:text-accent-hover"
-      >
-        {site.email}
-      </a>
-      <p className="mt-4 max-w-xl text-sm text-faint">
-        Замер, сервис и встреча — по звонку или сообщению, объекты по всей
-        России. Телефон, почта или Telegram.
-      </p>
-      <MessengerLinks className="mt-6" />
     </Section>
   );
 }
