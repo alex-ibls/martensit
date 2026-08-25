@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { MessengerLinks } from "@/components/Messengers";
-import { isRuPhone, leadClients, leadTasks } from "@/lib/lead";
+import { isRuPhone, leadClients, leadFileAccept, leadFileHint, LEAD_FILE_MAX_BYTES, leadTasks } from "@/lib/lead";
 import { site } from "@/lib/site";
 
 const fieldClass =
@@ -42,8 +42,6 @@ export function LeadForm() {
     const phone = String(data.get("phone") || "").trim();
     const client = String(data.get("client") || "");
     const task = String(data.get("task") || "");
-    const comment = String(data.get("comment") || "").trim();
-    const website = String(data.get("website") || "").trim();
     const captchaAnswer = String(data.get("captcha") || "").trim();
     const consent = data.get("consent") === "on";
 
@@ -56,32 +54,35 @@ export function LeadForm() {
       return;
     }
 
+    const file = data.get("file");
+    if (file instanceof File && file.size > LEAD_FILE_MAX_BYTES) {
+      setError("Файл больше 10 МБ. Уменьшите его или отправьте без вложения.");
+      return;
+    }
+
     setStatus("loading");
     try {
+      const payload = new FormData(form);
+      payload.set("captchaToken", captcha.token);
       const res = await fetch("/api/lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          phone,
-          client,
-          task,
-          comment,
-          website,
-          captchaToken: captcha.token,
-          captcha: captchaAnswer,
-        }),
+        body: payload,
       });
-      const payload = (await res.json().catch(() => ({}))) as { error?: string };
+      const result = (await res.json().catch(() => ({}))) as { error?: string };
       if (res.ok) {
         setStatus("ok");
         form.reset();
         return;
       }
-      if (payload.error === "captcha") {
+      if (result.error === "captcha") {
         setError("Неверные символы. Введите заново.");
         form.querySelector<HTMLInputElement>('input[name="captcha"]')?.select();
         await loadCaptcha();
+        setStatus("idle");
+        return;
+      }
+      if (result.error === "file") {
+        setError("Этот файл нельзя прикрепить. Нужны фото, PDF, ZIP или чертёж DWG/DXF до 10 МБ.");
         setStatus("idle");
         return;
       }
@@ -153,6 +154,16 @@ export function LeadForm() {
       <label className="grid gap-1 text-sm text-muted">
         Комментарий
         <textarea name="comment" rows={3} className={fieldClass} />
+      </label>
+      <label className="grid gap-1 text-sm text-muted">
+        Файл, если нужно
+        <input
+          name="file"
+          type="file"
+          accept={leadFileAccept}
+          className="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground file:mr-3 file:rounded-md file:border-0 file:bg-surface-muted file:px-3 file:py-1.5 file:text-sm file:text-foreground"
+        />
+        <span className="text-xs text-faint">{leadFileHint}</span>
       </label>
       <div className="grid gap-2">
         <span className="text-sm text-muted">Проверка</span>

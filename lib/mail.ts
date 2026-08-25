@@ -23,7 +23,11 @@ export function mailTransport() {
   });
 }
 
-export async function sendLeadMail(text: string, subject: string) {
+export async function sendLeadMail(
+  text: string,
+  subject: string,
+  attachment?: { filename: string; content: Buffer; contentType?: string },
+) {
   if (!smtpConfigured()) {
     throw new Error("smtp_unconfigured");
   }
@@ -36,5 +40,6 @@ export async function sendLeadMail(text: string, subject: string) {
     to,
     subject,
     text,
+    attachments: attachment ? [attachment] : undefined,
   });
 }
