@@ -76,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ru" className={`${geologica.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <meta name="yandex-verification" content="b4756c0294bb5702" />
       </head>
       <body className="min-h-full bg-background font-sans text-foreground">
         <a
