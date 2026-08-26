@@ -1,21 +1,21 @@
 export const portfolio = [
   {
-    src: "/portfolio/02-industrial.jpg",
+    src: "/portfolio/g02-industrial.jpg",
     alt: "Панорамное остекление промышленного здания",
     caption: "Алюминий · панорама объекта",
   },
   {
-    src: "/portfolio/03-mural-street.jpg",
+    src: "/portfolio/g03-mural-street.jpg",
     alt: "Фасад здания с окнами и художественным оформлением",
     caption: "Фасад · остекление",
   },
   {
-    src: "/portfolio/04-facade-snow.jpg",
+    src: "/portfolio/g04-facade-snow.jpg",
     alt: "Современный фасад с панорамными окнами и стеклянными ограждениями",
     caption: "Алюминий · фасад",
   },
   {
-    src: "/portfolio/05-office.jpg",
+    src: "/portfolio/g05-office.jpg",
     alt: "Офисные стеклянные перегородки в чёрном профиле",
     caption: "Алюминий · офисные перегородки",
   },
