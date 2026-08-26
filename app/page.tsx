@@ -11,6 +11,7 @@ import {
   Portfolio,
   Process,
   Service,
+  Suppliers,
   Systems,
 } from "@/components/landing";
 
@@ -23,6 +24,7 @@ export default function Home() {
         <Hero />
         <Pillars />
         <Systems />
+        <Suppliers />
         <Design />
         <Service />
         <Audiences />

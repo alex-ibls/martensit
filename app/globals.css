@@ -131,6 +131,30 @@ html[data-theme="dark"] .section-drawing {
   filter: invert(1);
 }
 
+html[data-theme="dark"] .brand-mark {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .brand-mark {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+.brand-mark-knockout {
+  filter: brightness(0);
+}
+
+html[data-theme="dark"] .brand-mark-knockout {
+  filter: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] .brand-mark-knockout {
+    filter: none;
+  }
+}
+
 ::selection {
   background: #74c4cd;
   color: #141414;

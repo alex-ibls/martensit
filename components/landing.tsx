@@ -8,6 +8,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { LeadForm } from "@/components/LeadForm";
 import { MessengerLinks } from "@/components/Messengers";
 import { PortfolioGallery } from "@/components/PortfolioGallery";
+import { ProfileTape } from "@/components/ProfileTape";
 
 function SectionDrawing({
   src,
@@ -213,9 +214,19 @@ export function Systems() {
   );
 }
 
+export function Suppliers() {
+  return (
+    <Section id="postavshchiki">
+      <Kicker>Профили</Kicker>
+      <SectionTitle>Поставщики</SectionTitle>
+      <ProfileTape />
+    </Section>
+  );
+}
+
 export function Design() {
   return (
-    <Section>
+    <Section className="bg-surface-muted" drawing="/drawings/complex.jpg">
       <Kicker>Проектирование</Kicker>
       <SectionTitle>Проектирование светопрозрачных конструкций</SectionTitle>
       <div className="mt-12 grid gap-px bg-border md:grid-cols-2">
@@ -244,7 +255,7 @@ export function Design() {
 
 export function Service() {
   return (
-    <Section id="servis" className="bg-surface-muted" drawing="/drawings/service.jpg">
+    <Section id="servis" className="bg-surface-muted">
       <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
         <div>
           <Kicker>Сервис</Kicker>
@@ -337,7 +348,7 @@ export function Portfolio() {
 
 export function Faq() {
   return (
-    <Section id="faq" drawing="/drawings/complex.jpg">
+    <Section id="faq" drawing="/drawings/pvc.jpg">
       <Kicker>Справка</Kicker>
       <SectionTitle>Вопросы</SectionTitle>
       <dl className="mt-12 grid gap-0 border-t border-border">
