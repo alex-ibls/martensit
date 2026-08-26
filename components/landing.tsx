@@ -172,11 +172,11 @@ export function Systems() {
         <article className="overflow-hidden bg-surface">
           <div className="relative h-64">
             <Image
-              src="/portfolio/14-highrise.jpg"
-              alt="Фасадное остекление, алюминиевые светопрозрачные конструкции"
+              src="/illustrations/aluminum.jpg"
+              alt="Фасадное остекление и входная группа из алюминия"
               fill
-              quality={70}
-              className="object-cover"
+              quality={75}
+              className="object-cover object-center"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -192,11 +192,11 @@ export function Systems() {
         <article className="overflow-hidden bg-surface">
           <div className="relative h-64">
             <Image
-              src="/portfolio/18-house-dusk.jpg"
-              alt="Окна ПВХ от производителя, частный дом"
+              src="/illustrations/pvc.jpg"
+              alt="Окна и дверь ПВХ в частном доме"
               fill
-              quality={70}
-              className="object-cover"
+              quality={75}
+              className="object-cover object-center"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>

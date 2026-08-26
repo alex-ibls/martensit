@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Deskew and grade the landing-page photos to one graphite/glass look."""
+"""Historic batch processor for the original object photos.
+
+Gallery images in public/portfolio/ are now generated stills matching
+lib/portfolio.ts captions. Do not overwrite them by re-running this script.
+"""
 
 from __future__ import annotations
 
@@ -15,9 +19,8 @@ DEST = Path("/Users/bocharovalexander/Завод/public/portfolio")
 OG = Path("/Users/bocharovalexander/Завод/public/og/cover.jpg")
 MAX_EDGE = 1800
 
-# Strict set from the latest user batch (21 files).
+# Strict set from the latest user batch (20 files).
 SOURCES = [
-    "5215290882897158414-d3380098-6285-4185-a5fd-d1a6b5e69aa8.png",
     "5215290882897158422-77e68966-beec-4fe8-a22c-beb6a323effd.png",
     "5215290882897158425-9bac6187-7523-4649-9c58-86558ec2187d.png",
     "5215290882897158420-669e70b0-3546-4145-8308-994015875ba2.png",
@@ -41,7 +44,6 @@ SOURCES = [
 ]
 
 NAMES = [
-    "01-stained-glass",
     "02-industrial",
     "03-mural-street",
     "04-facade-snow",
