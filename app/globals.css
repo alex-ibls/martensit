@@ -92,6 +92,14 @@ body {
   font-variation-settings: "SHRP" 72;
 }
 
+.gallery-scroll {
+  scrollbar-width: none;
+}
+
+.gallery-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 ::selection {
   background: #74c4cd;
   color: #1b1a1b;

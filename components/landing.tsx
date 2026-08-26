@@ -7,6 +7,7 @@ import { portfolio } from "@/lib/portfolio";
 import { BrandLogo } from "@/components/BrandLogo";
 import { LeadForm } from "@/components/LeadForm";
 import { MessengerLinks } from "@/components/Messengers";
+import { PortfolioGallery } from "@/components/PortfolioGallery";
 
 function Section({
   id,
@@ -314,29 +315,9 @@ export function Process() {
 
 export function Portfolio() {
   return (
-    <Section id="obekty">
-      <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">Объекты</h2>
-      <p className="mt-3 text-muted">
-        Алюминиевые и ПВХ светопрозрачные конструкции. Адреса объектов не
-        указываем.
-      </p>
-      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {portfolio.map((item) => (
-          <li key={item.src} className="overflow-hidden rounded-xl border border-border bg-surface">
-            <div className="relative aspect-[4/3]">
-              <Image
-                src={item.src}
-                alt={item.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-            </div>
-            <p className="px-4 py-3 text-sm text-muted">{item.caption}</p>
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <section id="obekty" className="scroll-mt-24 py-16 sm:py-20">
+      <PortfolioGallery />
+    </section>
   );
 }
 
