@@ -102,14 +102,14 @@ export function Hero() {
             </a>
           </div>
         </div>
-        <div className="flex flex-col gap-4 border-t border-white/10 py-10 sm:flex-row sm:items-end sm:justify-between sm:py-12">
+        <div className="flex flex-col gap-3 border-t border-white/10 py-10 sm:flex-row sm:items-end sm:gap-5 sm:py-12">
           <div>
             <p className="kicker text-cta">Производство</p>
             <p className="font-display mt-3 text-5xl font-semibold leading-none tracking-tight text-zinc-50 sm:text-6xl">
               {site.capacity}
             </p>
           </div>
-          <p className="max-w-sm text-sm uppercase leading-6 tracking-[0.14em] text-zinc-400">
+          <p className="max-w-[13.5rem] text-sm uppercase leading-5 tracking-[0.14em] text-zinc-400 sm:pb-1">
             светопрозрачных конструкций в месяц
           </p>
         </div>
