@@ -48,16 +48,17 @@ export default function RequisitesPage() {
         <Link href="/" className="text-sm text-accent hover:text-accent-hover">
           ← На главную
         </Link>
-        <h1 className="font-display mt-6 text-3xl font-semibold text-foreground">
+        <p className="kicker mt-6 text-accent">Документы</p>
+        <h1 className="font-display mt-3 text-4xl font-semibold tracking-tight text-foreground">
           Реквизиты
         </h1>
-        <dl className="mt-8 divide-y divide-border rounded-xl border border-border bg-surface">
+        <dl className="mt-8 divide-y divide-border border border-border bg-surface">
           {rows.map((row) => (
             <div
               key={row.label}
               className="grid gap-1 px-4 py-3 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-4"
             >
-              <dt className="text-sm text-muted">{row.label}</dt>
+              <dt className="text-xs uppercase tracking-[0.12em] text-muted">{row.label}</dt>
               <dd className="font-medium text-foreground">{row.value}</dd>
             </div>
           ))}

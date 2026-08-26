@@ -46,7 +46,7 @@ export default function PrivacyPage() {
         </Link>
         <ThemeToggle />
       </div>
-      <h1 className="font-display mt-6 text-3xl font-semibold text-foreground">
+      <h1 className="font-display mt-6 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
         {privacyTitle}
       </h1>
       <div className="mt-8 space-y-4 text-sm leading-7 text-muted">

@@ -2,9 +2,11 @@ import { site } from "@/lib/site";
 
 export function BrandLogo({
   showTagline = true,
+  className = "text-foreground",
   taglineClassName = "hidden text-[11px] font-normal tracking-wide text-muted sm:block",
 }: {
   showTagline?: boolean;
+  className?: string;
   taglineClassName?: string;
 }) {
   return (
@@ -18,7 +20,7 @@ export function BrandLogo({
         className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
       />
       <span className="min-w-0 leading-tight">
-        <span className="font-display block text-[15px] font-semibold uppercase tracking-[0.14em] text-foreground sm:text-base">
+        <span className={`font-display block text-[15px] font-semibold uppercase tracking-[0.16em] sm:text-base ${className}`}>
           {site.brand}
         </span>
         {showTagline ? (

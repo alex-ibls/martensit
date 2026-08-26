@@ -6,8 +6,7 @@ import { MessengerLinks } from "@/components/Messengers";
 import { isRuPhone, leadClients, leadFileAccept, leadFileHint, LEAD_FILE_MAX_BYTES, leadTasks } from "@/lib/lead";
 import { site } from "@/lib/site";
 
-const fieldClass =
-  "rounded-md border border-border bg-background px-3 py-2 text-foreground outline-none focus:border-accent";
+import { fieldClass, btnPrimary, btnIcon, panel } from "@/lib/ui";
 
 type CaptchaChallenge = {
   token: string;
@@ -95,7 +94,7 @@ export function LeadForm() {
 
   if (status === "ok") {
     return (
-      <div className="rounded-xl border border-accent/30 bg-surface p-6">
+      <div className={`${panel} p-6 sm:p-8`}>
         <p className="text-lg font-medium text-foreground">Заявка принята. Перезвоним или напишем.</p>
         <a href={site.phoneHref} className="mt-3 block text-accent hover:text-accent-hover">
           {site.phone}
@@ -107,8 +106,8 @@ export function LeadForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4 rounded-xl border border-border bg-surface p-6">
-      <h3 className="font-display text-lg font-semibold text-foreground">Заявка</h3>
+    <form onSubmit={onSubmit} className={`grid gap-4 ${panel} p-6 sm:p-8`}>
+      <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">Заявка</h3>
       <label className="sr-only">
         Сайт
         <input name="website" tabIndex={-1} autoComplete="off" />
@@ -161,7 +160,7 @@ export function LeadForm() {
           name="file"
           type="file"
           accept={leadFileAccept}
-          className="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground file:mr-3 file:rounded-md file:border-0 file:bg-surface-muted file:px-3 file:py-1.5 file:text-sm file:text-foreground"
+          className="rounded-none border border-border bg-background px-3 py-2 text-sm text-foreground file:mr-3 file:rounded-none file:border-0 file:bg-surface-muted file:px-3 file:py-1.5 file:text-xs file:uppercase file:tracking-[0.12em] file:text-foreground"
         />
         <span className="text-xs text-faint">{leadFileHint}</span>
       </label>
@@ -175,10 +174,10 @@ export function LeadForm() {
               alt="Символы для проверки"
               width={180}
               height={56}
-              className="h-14 w-[180px] rounded-md border border-border bg-[#ecebe9]"
+              className="h-14 w-[180px] rounded-none border border-border bg-[#ecebe9]"
             />
           ) : (
-            <div className="h-14 w-[180px] rounded-md border border-border bg-background" />
+            <div className="h-14 w-[180px] rounded-none border border-border bg-background" />
           )}
           <button
             type="button"
@@ -187,7 +186,7 @@ export function LeadForm() {
                 setError("Не удалось обновить проверку.");
               });
             }}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:border-accent/40"
+            className={btnIcon}
             aria-label="Обновить картинку"
             title="Обновить картинку"
           >
@@ -227,7 +226,7 @@ export function LeadForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-md bg-cta px-6 py-3 text-sm font-semibold text-cta-fg transition hover:brightness-110 disabled:opacity-60"
+        className={btnPrimary}
       >
         {status === "loading" ? "Отправка…" : "Отправить заявку"}
       </button>

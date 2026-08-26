@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { requisitesText } from "@/lib/site";
+import { btnGhost } from "@/lib/ui";
 
 export function CopyRequisites() {
   const [copied, setCopied] = useState(false);
@@ -20,7 +21,7 @@ export function CopyRequisites() {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex rounded-md border border-border bg-surface px-4 py-2 text-sm text-foreground transition hover:border-accent/40"
+      className={btnGhost}
     >
       {copied ? "Скопировано" : "Скопировать реквизиты"}
     </button>

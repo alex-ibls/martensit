@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { portfolio } from "@/lib/portfolio";
+import { btnIcon } from "@/lib/ui";
 
 function Chevron({ dir }: { dir: "prev" | "next" }) {
   return (
@@ -142,7 +143,8 @@ export function PortfolioGallery() {
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-4 px-4 sm:px-6">
         <div className="min-w-0">
-          <h2 id={headingId} className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
+          <p className="kicker text-accent">Работы</p>
+          <h2 id={headingId} className="font-display mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Объекты
           </h2>
           <p className="mt-3 text-muted">
@@ -155,7 +157,7 @@ export function PortfolioGallery() {
           </p>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition hover:border-accent/40 disabled:pointer-events-none disabled:opacity-35"
+            className={`${btnIcon} disabled:pointer-events-none disabled:opacity-35`}
             aria-label="Предыдущий объект"
             aria-controls={listId}
             disabled={index === 0}
@@ -165,7 +167,7 @@ export function PortfolioGallery() {
           </button>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition hover:border-accent/40 disabled:pointer-events-none disabled:opacity-35"
+            className={`${btnIcon} disabled:pointer-events-none disabled:opacity-35`}
             aria-label="Следующий объект"
             aria-controls={listId}
             disabled={index === total - 1}
@@ -185,7 +187,7 @@ export function PortfolioGallery() {
         {portfolio.map((item) => (
           <li
             key={item.src}
-            className="w-[min(32rem,82vw)] shrink-0 snap-start overflow-hidden rounded-xl border border-border bg-surface"
+            className="w-[min(32rem,82vw)] shrink-0 snap-start overflow-hidden border border-border bg-surface"
           >
             <div className="relative aspect-[4/3]">
               <Image

@@ -1,4 +1,5 @@
 import { messengerHref, site } from "@/lib/site";
+import { btnIcon } from "@/lib/ui";
 
 export function TelegramIcon({ className }: { className?: string }) {
   return (
@@ -24,7 +25,7 @@ export function MessengerLinks({
         {...(site.telegramUrl
           ? { target: "_blank", rel: "noopener noreferrer" }
           : undefined)}
-        className="inline-flex min-h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-md border border-border bg-surface px-3 text-sm text-foreground transition hover:border-accent/40 hover:bg-surface-muted"
+        className={`${btnIcon} ${compact ? "" : "w-auto gap-2 px-3 text-xs font-semibold uppercase tracking-[0.16em]"}`}
       >
         <TelegramIcon className="h-4 w-4" />
         {compact ? <span className="sr-only">Telegram</span> : <span>Telegram</span>}

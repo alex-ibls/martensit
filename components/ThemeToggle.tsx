@@ -9,6 +9,7 @@ import {
   themeLabels,
   type ThemeMode,
 } from "@/lib/theme";
+import { btnIcon } from "@/lib/ui";
 
 function SunIcon() {
   return (
@@ -43,7 +44,7 @@ const icons: Record<ThemeMode, typeof SunIcon> = {
 };
 
 export function ThemeToggle() {
-  const [mode, setMode] = useState<ThemeMode>("system");
+  const [mode, setMode] = useState<ThemeMode>("light");
 
   useEffect(() => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
@@ -66,7 +67,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={cycle}
-      className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition hover:border-accent/40"
+      className={btnIcon}
       aria-label={`Тема: ${themeLabels[mode]}. Нажмите, чтобы сменить`}
       title={`Тема: ${themeLabels[mode]}`}
     >

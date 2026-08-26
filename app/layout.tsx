@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geologica } from "next/font/google";
+import { Geologica, Oswald } from "next/font/google";
 import { site } from "@/lib/site";
 import { YandexMetrika } from "@/components/YandexMetrika";
 import { themeInitScript } from "@/lib/theme";
@@ -9,6 +9,12 @@ const geologica = Geologica({
   variable: "--font-geologica",
   subsets: ["cyrillic", "latin"],
   axes: ["SHRP"],
+  display: "swap",
+});
+
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["cyrillic", "latin"],
   display: "swap",
 });
 
@@ -73,7 +79,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className={`${geologica.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="ru" className={`${geologica.variable} ${oswald.variable} h-full antialiased`} data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <meta name="yandex-verification" content="b4756c0294bb5702" />
@@ -81,7 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full bg-background font-sans text-foreground">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-cta focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-cta-fg"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-none focus:bg-cta focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:uppercase focus:tracking-[0.16em] focus:text-cta-fg"
         >
           К содержанию
         </a>

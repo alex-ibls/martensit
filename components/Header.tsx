@@ -5,6 +5,7 @@ import { nav, site, homeSectionHref } from "@/lib/site";
 import { BrandLogo } from "@/components/BrandLogo";
 import { MessengerLinks } from "@/components/Messengers";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { btnIcon } from "@/lib/ui";
 
 function PhoneIcon() {
   return (
@@ -18,15 +19,15 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
         <a href="/#top" className="min-w-0 shrink">
           <BrandLogo taglineClassName="hidden text-[11px] font-normal tracking-wide text-muted xl:block" />
         </a>
 
-        <nav className="hidden items-center gap-4 text-sm text-muted lg:flex xl:gap-6" aria-label="Основное меню">
+        <nav className="hidden items-center gap-5 text-[11px] font-medium uppercase tracking-[0.16em] text-muted lg:flex xl:gap-7" aria-label="Основное меню">
           {nav.map((item) => (
-            <a key={item.href} href={homeSectionHref(item.href)} className="whitespace-nowrap hover:text-accent">
+            <a key={item.href} href={homeSectionHref(item.href)} className="whitespace-nowrap hover:text-foreground">
               {item.label}
             </a>
           ))}
@@ -35,13 +36,13 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-2">
           <a
             href={site.phoneHref}
-            className="hidden whitespace-nowrap text-sm font-medium text-foreground hover:text-accent sm:inline"
+            className="hidden whitespace-nowrap text-sm font-medium tracking-wide text-foreground hover:text-accent sm:inline"
           >
             {site.phone}
           </a>
           <a
             href={site.phoneHref}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-surface text-foreground transition hover:border-accent/40 sm:hidden"
+            className={`${btnIcon} sm:hidden`}
             aria-label={`Позвонить ${site.phone}`}
             title={site.phone}
           >
@@ -56,7 +57,7 @@ export function Header() {
           </div>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground lg:hidden"
+            className={`${btnIcon} lg:hidden`}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
@@ -71,7 +72,7 @@ export function Header() {
 
       {open ? (
         <div id="mobile-menu" className="border-t border-border bg-background px-4 py-4 lg:hidden">
-          <nav className="flex flex-col gap-3 text-foreground" aria-label="Мобильное меню">
+          <nav className="flex flex-col gap-1 text-sm font-medium uppercase tracking-[0.16em] text-foreground" aria-label="Мобильное меню">
             {nav.map((item) => (
               <a
                 key={item.href}

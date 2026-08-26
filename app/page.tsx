@@ -3,7 +3,6 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import {
   Audiences,
-  Capacity,
   Contacts,
   Design,
   Faq,
@@ -22,7 +21,6 @@ export default function Home() {
       <Header />
       <main id="main-content">
         <Hero />
-        <Capacity />
         <Pillars />
         <Systems />
         <Design />
