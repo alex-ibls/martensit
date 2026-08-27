@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [absoluteUrl(site.ogImage)],
     },
     {
+      url: absoluteUrl("/postavshchiki"),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: absoluteUrl("/privacy"),
       lastModified: new Date(),
       changeFrequency: "yearly",

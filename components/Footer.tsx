@@ -18,6 +18,9 @@ export function Footer() {
               {item.label}
             </a>
           ))}
+          <Link href="/postavshchiki" className="hover:text-zinc-50">
+            Поставщики
+          </Link>
           <Link href="/rekvizity" className="hover:text-zinc-50">
             Реквизиты
           </Link>

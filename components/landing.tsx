@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { faqItems } from "@/lib/faq";
-import { btnGhostHero, btnPrimary } from "@/lib/ui";
+import { btnGhost, btnGhostHero, btnPrimary } from "@/lib/ui";
 import { BrandLogo } from "@/components/BrandLogo";
 import { LeadForm } from "@/components/LeadForm";
 import { MessengerLinks } from "@/components/Messengers";
@@ -218,7 +218,12 @@ export function Suppliers() {
   return (
     <Section id="postavshchiki">
       <Kicker>Профили</Kicker>
-      <SectionTitle>Поставщики</SectionTitle>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <SectionTitle>Поставщики</SectionTitle>
+        <Link href="/postavshchiki" className={`${btnGhost} self-start sm:self-auto`}>
+          Подробнее о поставщиках
+        </Link>
+      </div>
       <ProfileTape />
     </Section>
   );
