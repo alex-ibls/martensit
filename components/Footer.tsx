@@ -21,6 +21,9 @@ export function Footer() {
           <Link href="/postavshchiki" className="hover:text-zinc-50">
             Поставщики
           </Link>
+          <Link href="/karta-sajta" className="hover:text-zinc-50">
+            Карта сайта
+          </Link>
           <Link href="/rekvizity" className="hover:text-zinc-50">
             Реквизиты
           </Link>

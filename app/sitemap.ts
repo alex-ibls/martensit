@@ -1,32 +1,18 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, site } from "@/lib/site";
+import { sitemapPages } from "@/lib/sitemap";
+import { absoluteOn, resolveMetadataBase } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: site.siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-      images: [absoluteUrl(site.ogImage)],
-    },
-    {
-      url: absoluteUrl("/postavshchiki"),
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: absoluteUrl("/privacy"),
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: absoluteUrl("/rekvizity"),
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.4,
-    },
-  ];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const lastModified = new Date();
+  const base = await resolveMetadataBase();
+
+  return sitemapPages.map((page) => ({
+    url: absoluteOn(base, page.path),
+    lastModified,
+    changeFrequency: page.changeFrequency,
+    priority: page.priority,
+    ...(page.images
+      ? { images: page.images.map((src) => absoluteOn(base, src)) }
+      : {}),
+  }));
 }

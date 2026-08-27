@@ -1,6 +1,7 @@
 import { faqItems } from "@/lib/faq";
 import { offerServices } from "@/lib/services";
-import { absoluteUrl, site } from "@/lib/site";
+import { absoluteOn, resolveMetadataBase } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 function JsonLdScript({ data }: { data: unknown }) {
   return (
@@ -13,8 +14,8 @@ function JsonLdScript({ data }: { data: unknown }) {
   );
 }
 
-function organizationNode() {
-  const orgId = `${site.siteUrl}/#org`;
+function organizationNode(siteUrl: string) {
+  const orgId = `${siteUrl}/#org`;
   const phone = site.phoneHref.replace("tel:", "");
 
   return {
@@ -27,11 +28,11 @@ function organizationNode() {
     foundingDate: "2019-09-12",
     slogan: site.tagline,
     description: site.description,
-    url: site.siteUrl,
-    image: absoluteUrl(site.ogImage),
+    url: siteUrl,
+    image: absoluteOn(new URL(siteUrl), site.ogImage),
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl(site.logo),
+      url: absoluteOn(new URL(siteUrl), site.logo),
     },
     email: site.email,
     telephone: phone,
@@ -67,26 +68,27 @@ function organizationNode() {
   };
 }
 
-export function JsonLd() {
-  const orgId = `${site.siteUrl}/#org`;
+export async function JsonLd() {
+  const siteUrl = (await resolveMetadataBase()).origin;
+  const orgId = `${siteUrl}/#org`;
 
   return (
     <JsonLdScript
       data={{
         "@context": "https://schema.org",
         "@graph": [
-          organizationNode(),
+          organizationNode(siteUrl),
           {
             "@type": "WebSite",
-            "@id": `${site.siteUrl}/#website`,
-            url: site.siteUrl,
+            "@id": `${siteUrl}/#website`,
+            url: siteUrl,
             name: site.orgName,
             inLanguage: "ru-RU",
             publisher: { "@id": orgId },
           },
           {
             "@type": "FAQPage",
-            "@id": `${site.siteUrl}/#faq`,
+            "@id": `${siteUrl}/#faq`,
             inLanguage: "ru-RU",
             mainEntity: faqItems.map((item) => ({
               "@type": "Question",
@@ -103,23 +105,24 @@ export function JsonLd() {
   );
 }
 
-export function PrivacyJsonLd() {
-  const orgId = `${site.siteUrl}/#org`;
-  const pageUrl = absoluteUrl("/privacy");
+export async function PrivacyJsonLd() {
+  const siteUrl = (await resolveMetadataBase()).origin;
+  const orgId = `${siteUrl}/#org`;
+  const pageUrl = absoluteOn(new URL(siteUrl), "/privacy");
 
   return (
     <JsonLdScript
       data={{
         "@context": "https://schema.org",
         "@graph": [
-          organizationNode(),
+          organizationNode(siteUrl),
           {
             "@type": "WebPage",
             "@id": `${pageUrl}#webpage`,
             url: pageUrl,
             name: "Политика обработки персональных данных",
             inLanguage: "ru-RU",
-            isPartOf: { "@id": `${site.siteUrl}/#website` },
+            isPartOf: { "@id": `${siteUrl}/#website` },
             about: { "@id": orgId },
           },
           {
@@ -129,7 +132,7 @@ export function PrivacyJsonLd() {
                 "@type": "ListItem",
                 position: 1,
                 name: site.brand,
-                item: site.siteUrl,
+                item: siteUrl,
               },
               {
                 "@type": "ListItem",

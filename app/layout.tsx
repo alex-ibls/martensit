@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geologica, Oswald } from "next/font/google";
 import { site } from "@/lib/site";
+import { pageShareMetadata } from "@/lib/seo";
 import { YandexMetrika } from "@/components/YandexMetrika";
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
@@ -18,64 +19,50 @@ const oswald = Oswald({
   display: "swap",
 });
 
-const ogImage = {
-  url: site.ogImage,
-  width: 1200,
-  height: 630,
-  alt: site.h1,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const share = await pageShareMetadata({
+    title: site.title,
+    description: site.description,
+    path: "/",
+  });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.siteUrl),
-  title: {
-    default: site.title,
-    template: `%s — завод ${site.brand}, ${site.city}`,
-  },
-  description: site.description,
-  keywords: [...site.keywords],
-  applicationName: site.orgName,
-  publisher: site.legalName,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: site.title,
+  return {
+    ...share,
+    title: {
+      default: site.title,
+      template: `%s — завод ${site.brand}, ${site.city}`,
+    },
     description: site.description,
-    url: "/",
-    siteName: site.orgName,
-    locale: "ru_RU",
-    type: "website",
-    images: [ogImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: site.title,
-    description: site.description,
-    images: [ogImage],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    keywords: [...site.keywords],
+    applicationName: site.orgName,
+    publisher: site.legalName,
+    alternates: {
+      canonical: "/",
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  icons: {
-    icon: site.logoMark,
-    apple: "/brand/icon-180.png",
-  },
-  ...(site.googleVerification || site.yandexVerification
-    ? {
-        verification: {
-          ...(site.googleVerification ? { google: site.googleVerification } : {}),
-          ...(site.yandexVerification ? { yandex: site.yandexVerification } : {}),
-        },
-      }
-    : {}),
-};
+    icons: {
+      icon: site.logoMark,
+      apple: "/brand/icon-180.png",
+    },
+    ...(site.googleVerification || site.yandexVerification
+      ? {
+          verification: {
+            ...(site.googleVerification ? { google: site.googleVerification } : {}),
+            ...(site.yandexVerification ? { yandex: site.yandexVerification } : {}),
+          },
+        }
+      : {}),
+  };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

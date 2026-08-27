@@ -4,25 +4,26 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BrandMark } from "@/components/ProfileTape";
 import { aluminumProfiles, pvcProfiles, type ProfileBrand } from "@/lib/profiles";
+import { pageShareMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 const pageTitle = "Поставщики";
 const pageDescription = `Алюминиевые и ПВХ системы завода «${site.brand}»: Алютех, Алнео, Татпроф, Проведал, ТиСН, Экспроф, KBE.`;
 
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: pageDescription,
-  alternates: { canonical: "/postavshchiki" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const share = await pageShareMetadata({
     title: `${pageTitle} — завод ${site.brand}, ${site.city}`,
     description: pageDescription,
-    url: "/postavshchiki",
-    siteName: site.orgName,
-    locale: "ru_RU",
-    type: "website",
-    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.h1 }],
-  },
-};
+    path: "/postavshchiki",
+  });
+
+  return {
+    ...share,
+    title: pageTitle,
+    description: pageDescription,
+    alternates: { canonical: "/postavshchiki" },
+  };
+}
 
 function SupplierItem({ item }: { item: ProfileBrand }) {
   return (

@@ -3,25 +3,26 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CopyRequisites } from "@/components/CopyRequisites";
+import { pageShareMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 const pageTitle = "Реквизиты";
 const pageDescription = `Реквизиты ${site.legalName}: ИНН, КПП, ОГРН, расчётный счёт, банк, директор.`;
 
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: pageDescription,
-  alternates: { canonical: "/rekvizity" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const share = await pageShareMetadata({
     title: `${pageTitle} — завод ${site.brand}, ${site.city}`,
     description: pageDescription,
-    url: "/rekvizity",
-    siteName: site.orgName,
-    locale: "ru_RU",
-    type: "website",
-    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.h1 }],
-  },
-};
+    path: "/rekvizity",
+  });
+
+  return {
+    ...share,
+    title: pageTitle,
+    description: pageDescription,
+    alternates: { canonical: "/rekvizity" },
+  };
+}
 
 const rows = [
   { label: "Организация", value: site.legalName },

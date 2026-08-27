@@ -1,40 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/lib/site";
+import { pageShareMetadata } from "@/lib/seo";
 import { PrivacyJsonLd } from "@/components/JsonLd";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const privacyTitle = "Политика обработки персональных данных";
 const privacyDescription = `Политика обработки персональных данных завода «${site.brand}», ${site.city}.`;
 const privacyOgTitle = `${privacyTitle} — завод ${site.brand}, ${site.city}`;
-const ogImage = {
-  url: site.ogImage,
-  width: 1200,
-  height: 630,
-  alt: site.h1,
-};
 
-export const metadata: Metadata = {
-  title: privacyTitle,
-  description: privacyDescription,
-  alternates: { canonical: "/privacy" },
-  robots: { index: true, follow: true },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const share = await pageShareMetadata({
     title: privacyOgTitle,
     description: privacyDescription,
-    url: "/privacy",
-    siteName: site.orgName,
-    locale: "ru_RU",
-    type: "website",
-    images: [ogImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: privacyOgTitle,
+    path: "/privacy",
+  });
+
+  return {
+    ...share,
+    title: privacyTitle,
     description: privacyDescription,
-    images: [ogImage],
-  },
-};
+    alternates: { canonical: "/privacy" },
+    robots: { index: true, follow: true },
+  };
+}
 
 export default function PrivacyPage() {
   return (
