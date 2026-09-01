@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { allProducts, productHref } from "@/lib/products";
 import { site } from "@/lib/site";
 
 export type SitemapPage = {
@@ -16,6 +17,12 @@ export const sitemapPages: SitemapPage[] = [
     changeFrequency: "weekly",
     priority: 1,
     images: [site.ogImage],
+  },
+  {
+    path: "/produkciya",
+    title: "Продукция",
+    changeFrequency: "monthly",
+    priority: 0.8,
   },
   {
     path: "/postavshchiki",
@@ -43,7 +50,20 @@ export const sitemapPages: SitemapPage[] = [
   },
 ];
 
+export const productSitemapPages: SitemapPage[] = allProducts().map((product) => ({
+  path: productHref(product.id),
+  title: product.name,
+  changeFrequency: "monthly",
+  priority: 0.7,
+  images: [product.image],
+}));
+
+export function allSitemapPages(): SitemapPage[] {
+  return [...sitemapPages, ...productSitemapPages];
+}
+
 export const homeSitemapSections = [
+  { href: "/#produkciya", title: "Продукция" },
   { href: "/#proizvodstvo", title: "Производство и монтаж" },
   { href: "/#postavshchiki", title: "Поставщики" },
   { href: "/#proektirovanie", title: "Проектирование" },

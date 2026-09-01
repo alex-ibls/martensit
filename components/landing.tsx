@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ProductCategoryGrid } from "@/components/ProductCatalog";
+import { productCatalogHref } from "@/lib/products";
 import { site } from "@/lib/site";
 import { faqItems } from "@/lib/faq";
 import { btnGhost, btnGhostHero, btnPrimary } from "@/lib/ui";
@@ -210,6 +212,26 @@ export function Systems() {
           </div>
         </article>
       </div>
+    </Section>
+  );
+}
+
+export function Products() {
+  return (
+    <Section id="produkciya">
+      <Kicker>Каталог</Kicker>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <SectionTitle>Продукция</SectionTitle>
+        <Link href={productCatalogHref} className={`${btnGhost} self-start sm:self-auto`}>
+          Весь каталог
+        </Link>
+      </div>
+      <p className="mt-5 max-w-2xl text-sm leading-7 text-muted">
+        Порталы, перегородки, остекление беседок и террас, ограждения, окна,
+        двери, фасады и входные группы. Карточки с составом конструкций — в
+        каталоге.
+      </p>
+      <ProductCategoryGrid />
     </Section>
   );
 }

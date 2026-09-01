@@ -3,11 +3,12 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { homeSitemapSections, sitemapPages } from "@/lib/sitemap";
+import { productCatalogHref, productHref, productSections } from "@/lib/products";
 import { pageShareMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 const pageTitle = "Карта сайта";
-const pageDescription = `Страницы и разделы сайта завода «${site.brand}»: производство и монтаж светопрозрачных конструкций, поставщики, реквизиты.`;
+const pageDescription = `Страницы сайта завода «${site.brand}»: каталог продукции и страницы конструкций, производство и монтаж, поставщики, реквизиты.`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const share = await pageShareMetadata({
@@ -73,6 +74,41 @@ export default function SiteMapPage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+            Продукция
+          </h2>
+          <p className="mt-3">
+            <Link href={productCatalogHref} className="text-sm text-accent hover:text-accent-hover">
+              Каталог
+            </Link>
+          </p>
+          {productSections.map((section) => (
+            <div key={section.id} className="mt-8">
+              <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
+                <Link
+                  href={`${productCatalogHref}#${section.id}`}
+                  className="hover:text-accent"
+                >
+                  {section.title}
+                </Link>
+              </h3>
+              <ul className="mt-3 divide-y divide-border border-y border-border">
+                {section.products.map((product) => (
+                  <li key={product.id}>
+                    <Link
+                      href={productHref(product.id)}
+                      className="block py-3 text-sm text-accent hover:text-accent-hover"
+                    >
+                      {product.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
       </main>
       <Footer />

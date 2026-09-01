@@ -13,7 +13,7 @@ type CaptchaChallenge = {
   svg: string;
 };
 
-export function LeadForm() {
+export function LeadForm({ commentDefault = "" }: { commentDefault?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const [error, setError] = useState("");
   const [captcha, setCaptcha] = useState<CaptchaChallenge | null>(null);
@@ -152,7 +152,7 @@ export function LeadForm() {
       </label>
       <label className="grid gap-1 text-sm text-muted">
         Комментарий
-        <textarea name="comment" rows={3} className={fieldClass} />
+        <textarea name="comment" rows={3} defaultValue={commentDefault} className={fieldClass} />
       </label>
       <label className="grid gap-1 text-sm text-muted">
         Файл, если нужно

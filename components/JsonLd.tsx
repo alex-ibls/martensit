@@ -1,4 +1,9 @@
 import { faqItems } from "@/lib/faq";
+import {
+  allProducts,
+  productHref,
+  type CatalogProduct,
+} from "@/lib/products";
 import { offerServices } from "@/lib/services";
 import { absoluteOn, resolveMetadataBase } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -138,6 +143,132 @@ export async function PrivacyJsonLd() {
                 "@type": "ListItem",
                 position: 2,
                 name: "Политика обработки персональных данных",
+                item: pageUrl,
+              },
+            ],
+          },
+        ],
+      }}
+    />
+  );
+}
+
+export async function ProductsJsonLd() {
+  const metadataBase = await resolveMetadataBase();
+  const siteUrl = metadataBase.origin;
+  const orgId = `${siteUrl}/#org`;
+  const pageUrl = absoluteOn(metadataBase, "/produkciya");
+  const products = allProducts();
+
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          organizationNode(siteUrl),
+          {
+            "@type": "CollectionPage",
+            "@id": `${pageUrl}#webpage`,
+            url: pageUrl,
+            name: "Продукция",
+            description: `Каталог светопрозрачных конструкций завода «${site.brand}».`,
+            inLanguage: "ru-RU",
+            isPartOf: { "@id": `${siteUrl}/#website` },
+            about: { "@id": orgId },
+            mainEntity: {
+              "@type": "ItemList",
+              numberOfItems: products.length,
+              itemListElement: products.map((product, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                item: {
+                  "@type": "Product",
+                  name: product.name,
+                  description: product.summary,
+                  image: absoluteOn(metadataBase, product.image),
+                  url: absoluteOn(metadataBase, productHref(product.id)),
+                  brand: { "@type": "Brand", name: site.brand },
+                  manufacturer: { "@id": orgId },
+                },
+              })),
+            },
+          },
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: site.brand,
+                item: siteUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Продукция",
+                item: pageUrl,
+              },
+            ],
+          },
+        ],
+      }}
+    />
+  );
+}
+
+export async function ProductPageJsonLd({ product }: { product: CatalogProduct }) {
+  const metadataBase = await resolveMetadataBase();
+  const siteUrl = metadataBase.origin;
+  const orgId = `${siteUrl}/#org`;
+  const catalogUrl = absoluteOn(metadataBase, "/produkciya");
+  const pageUrl = absoluteOn(metadataBase, productHref(product.id));
+
+  return (
+    <JsonLdScript
+      data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          organizationNode(siteUrl),
+          {
+            "@type": "Product",
+            "@id": `${pageUrl}#product`,
+            name: product.name,
+            description: product.body,
+            image: absoluteOn(metadataBase, product.image),
+            url: pageUrl,
+            brand: { "@type": "Brand", name: site.brand },
+            manufacturer: { "@id": orgId },
+            category: product.sectionTitle,
+          },
+          {
+            "@type": "WebPage",
+            "@id": `${pageUrl}#webpage`,
+            url: pageUrl,
+            name: product.name,
+            description: product.summary,
+            inLanguage: "ru-RU",
+            isPartOf: { "@id": `${siteUrl}/#website` },
+            about: { "@id": `${pageUrl}#product` },
+          },
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: site.brand,
+                item: siteUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Продукция",
+                item: catalogUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: product.name,
                 item: pageUrl,
               },
             ],

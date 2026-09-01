@@ -50,6 +50,12 @@ export const site = {
     "фасадное остекление",
     "входные группы",
     "окна ПВХ от производителя",
+    "портальные системы",
+    "стеклянные перегородки",
+    "остекление беседок",
+    "стеклянные ограждения",
+    "алюминиевые окна",
+    "алюминиевые двери",
   ],
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
     /\/$/,
@@ -83,9 +89,8 @@ export function isPublicSiteUrl() {
 }
 
 export const nav = [
+  { href: "/produkciya", label: "Продукция" },
   { href: "#proizvodstvo", label: "Производство" },
-  { href: "#proektirovanie", label: "Проектирование" },
-  { href: "#servis", label: "Сервис" },
   { href: "#obekty", label: "Объекты" },
   { href: "#kontakty", label: "Контакты" },
 ] as const;
@@ -96,6 +101,10 @@ export function messengerHref(url: string) {
 
 export function homeSectionHref(hash: string) {
   return `/${hash.startsWith("#") ? hash : `#${hash}`}`;
+}
+
+export function navItemHref(href: string) {
+  return href.startsWith("#") ? homeSectionHref(href) : href;
 }
 
 export function requisitesText() {

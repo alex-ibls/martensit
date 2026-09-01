@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { nav, site, homeSectionHref } from "@/lib/site";
+import { nav, site, navItemHref } from "@/lib/site";
 import { BrandLogo } from "@/components/BrandLogo";
 import { MessengerLinks } from "@/components/Messengers";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -25,9 +25,9 @@ export function Header() {
           <BrandLogo taglineClassName="hidden text-[11px] font-normal tracking-wide text-muted xl:block" />
         </a>
 
-        <nav className="hidden items-center gap-5 text-[11px] font-medium uppercase tracking-[0.16em] text-muted lg:flex xl:gap-7" aria-label="Основное меню">
+        <nav className="hidden items-center gap-3 text-[11px] font-medium uppercase tracking-[0.14em] text-muted lg:flex xl:gap-7 xl:tracking-[0.16em]" aria-label="Основное меню">
           {nav.map((item) => (
-            <a key={item.href} href={homeSectionHref(item.href)} className="whitespace-nowrap hover:text-foreground">
+            <a key={item.href} href={navItemHref(item.href)} className="whitespace-nowrap hover:text-foreground">
               {item.label}
             </a>
           ))}
@@ -76,7 +76,7 @@ export function Header() {
             {nav.map((item) => (
               <a
                 key={item.href}
-                href={homeSectionHref(item.href)}
+                href={navItemHref(item.href)}
                 onClick={() => setOpen(false)}
                 className="min-h-11 py-2.5"
               >

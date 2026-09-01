@@ -10,6 +10,7 @@ import {
   Pillars,
   Portfolio,
   Process,
+  Products,
   Service,
   Suppliers,
   Systems,
@@ -24,6 +25,7 @@ export default function Home() {
         <Hero />
         <Pillars />
         <Systems />
+        <Products />
         <Suppliers />
         <Design />
         <Service />
