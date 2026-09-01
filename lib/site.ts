@@ -55,7 +55,6 @@ export const site = {
     "остекление беседок",
     "стеклянные ограждения",
     "алюминиевые окна",
-    "алюминиевые двери",
   ],
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
     /\/$/,

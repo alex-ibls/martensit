@@ -9,7 +9,7 @@ import { pageShareMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 const pageTitle = "Продукция";
-const pageDescription = `Каталог светопрозрачных конструкций завода «${site.brand}»: порталы, перегородки, остекление беседок и террас, ограждения, окна, двери, фасады и входные группы. Производство в ${site.city}, монтаж ${site.coverage}.`;
+const pageDescription = `Каталог светопрозрачных конструкций завода «${site.brand}»: порталы, перегородки, остекление беседок и террас, ограждения, окна, фасады и входные группы. Производство в ${site.city}, монтаж ${site.coverage}.`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const share = await pageShareMetadata({
@@ -29,7 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
       "остекление беседок",
       "стеклянные ограждения",
       "алюминиевые окна",
-      "алюминиевые двери",
       "фасадное остекление",
       "входные группы",
     ],

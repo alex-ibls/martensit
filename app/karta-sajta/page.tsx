@@ -85,7 +85,9 @@ export default function SiteMapPage() {
               Каталог
             </Link>
           </p>
-          {productSections.map((section) => (
+          {productSections
+            .filter((section) => section.id !== "dveri")
+            .map((section) => (
             <div key={section.id} className="mt-8">
               <h3 className="font-display text-lg font-semibold tracking-tight text-foreground">
                 <Link

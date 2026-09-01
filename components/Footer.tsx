@@ -2,6 +2,13 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { nav, site, navItemHref } from "@/lib/site";
 
+const footerPages = [
+  { href: "/postavshchiki", label: "Поставщики" },
+  { href: "/karta-sajta", label: "Карта сайта" },
+  { href: "/rekvizity", label: "Реквизиты" },
+  { href: "/privacy", label: "Политика конфиденциальности" },
+] as const;
+
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-hero py-12 text-zinc-300">
@@ -12,24 +19,24 @@ export function Footer() {
             {site.city} · {site.coverage}
           </p>
         </div>
-        <nav className="flex flex-col gap-2 text-xs uppercase tracking-[0.16em] text-zinc-400" aria-label="Подвал">
-          {nav.map((item) => (
-            <a key={item.href} href={navItemHref(item.href)} className="hover:text-zinc-50">
-              {item.label}
-            </a>
-          ))}
-          <Link href="/postavshchiki" className="hover:text-zinc-50">
-            Поставщики
-          </Link>
-          <Link href="/karta-sajta" className="hover:text-zinc-50">
-            Карта сайта
-          </Link>
-          <Link href="/rekvizity" className="hover:text-zinc-50">
-            Реквизиты
-          </Link>
-          <Link href="/privacy" className="hover:text-zinc-50">
-            Политика обработки персональных данных
-          </Link>
+        <nav
+          className="grid grid-cols-1 gap-2 text-xs uppercase tracking-[0.16em] text-zinc-400 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-2"
+          aria-label="Подвал"
+        >
+          <div className="flex flex-col gap-2">
+            {nav.map((item) => (
+              <a key={item.href} href={navItemHref(item.href)} className="hover:text-zinc-50">
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2">
+            {footerPages.map((item) => (
+              <Link key={item.href} href={item.href} className="hover:text-zinc-50">
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </nav>
       </div>
       <p className="mx-auto mt-10 max-w-6xl px-4 text-xs text-zinc-600 sm:px-6">

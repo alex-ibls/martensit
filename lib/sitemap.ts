@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allProducts, productHref } from "@/lib/products";
+import { allProducts, productHref, type CatalogProduct } from "@/lib/products";
 import { site } from "@/lib/site";
 
 export type SitemapPage = {
@@ -38,7 +38,7 @@ export const sitemapPages: SitemapPage[] = [
   },
   {
     path: "/privacy",
-    title: "Политика обработки персональных данных",
+    title: "Политика конфиденциальности",
     changeFrequency: "yearly",
     priority: 0.3,
   },
@@ -50,13 +50,19 @@ export const sitemapPages: SitemapPage[] = [
   },
 ];
 
-export const productSitemapPages: SitemapPage[] = allProducts().map((product) => ({
-  path: productHref(product.id),
-  title: product.name,
-  changeFrequency: "monthly",
-  priority: 0.7,
-  images: [product.image],
-}));
+function listedCatalogProduct(product: CatalogProduct) {
+  return product.sectionId !== "dveri";
+}
+
+export const productSitemapPages: SitemapPage[] = allProducts()
+  .filter(listedCatalogProduct)
+  .map((product) => ({
+    path: productHref(product.id),
+    title: product.name,
+    changeFrequency: "monthly",
+    priority: 0.7,
+    images: [product.image],
+  }));
 
 export function allSitemapPages(): SitemapPage[] {
   return [...sitemapPages, ...productSitemapPages];
