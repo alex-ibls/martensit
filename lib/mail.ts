@@ -27,6 +27,7 @@ export async function sendLeadMail(
   text: string,
   subject: string,
   attachment?: { filename: string; content: Buffer; contentType?: string },
+  replyTo?: string,
 ) {
   if (!smtpConfigured()) {
     throw new Error("smtp_unconfigured");
@@ -38,6 +39,7 @@ export async function sendLeadMail(
   await mailTransport().sendMail({
     from,
     to,
+    replyTo,
     subject,
     text,
     attachments: attachment ? [attachment] : undefined,

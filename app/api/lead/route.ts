@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyCaptcha } from "@/lib/captcha";
 import {
-  leadClientLabel,
   leadTaskLabel,
   parseLeadFile,
   parseLeadPayload,
@@ -18,8 +17,8 @@ async function readLeadRequest(request: Request) {
     return {
       fields: {
         name: form.get("name"),
+        email: form.get("email"),
         phone: form.get("phone"),
-        client: form.get("client"),
         task: form.get("task"),
         comment: form.get("comment"),
         website: form.get("website"),
@@ -74,8 +73,8 @@ export async function POST(request: Request) {
   const text = [
     "Заявка с сайта Мартенсит",
     `Имя: ${parsed.name}`,
-    `Телефон: ${parsed.phone}`,
-    `Клиент: ${leadClientLabel(parsed.client)}`,
+    `Почта: ${parsed.email}`,
+    parsed.phone ? `Телефон: ${parsed.phone}` : "Телефон: не указан",
     `Задача: ${leadTaskLabel(parsed.task)}`,
     parsed.comment ? `Комментарий: ${parsed.comment}` : "",
     attachment ? `Вложение: ${attachment.filename}` : "Вложение: нет",
@@ -89,7 +88,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    await sendLeadMail(text, `Заявка с сайта: ${parsed.name}`, attachment);
+    await sendLeadMail(text, `Заявка с сайта: ${parsed.name}`, attachment, parsed.email);
   } catch {
     console.error("[lead] SMTP failed");
     return NextResponse.json({ error: "delivery" }, { status: 502 });

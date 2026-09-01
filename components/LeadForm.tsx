@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { MessengerLinks } from "@/components/Messengers";
-import { isRuPhone, leadClients, leadFileAccept, leadFileHint, LEAD_FILE_MAX_BYTES, leadTasks } from "@/lib/lead";
+import { isLeadEmail, isRuPhone, leadFileAccept, leadFileHint, LEAD_FILE_MAX_BYTES, leadTasks } from "@/lib/lead";
 import { site } from "@/lib/site";
 
 import { fieldClass, btnPrimary, btnIcon, panel } from "@/lib/ui";
@@ -38,14 +38,18 @@ export function LeadForm({ commentDefault = "" }: { commentDefault?: string }) {
     const form = event.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
     const phone = String(data.get("phone") || "").trim();
-    const client = String(data.get("client") || "");
     const task = String(data.get("task") || "");
     const captchaAnswer = String(data.get("captcha") || "").trim();
     const consent = data.get("consent") === "on";
 
-    if (!name || !isRuPhone(phone) || !client || !task || !consent) {
-      setError("Укажите имя, телефон в формате +7 или 8xxxxxxxxxx и отметьте согласие.");
+    if (!name || !isLeadEmail(email) || !task || !consent) {
+      setError("Укажите имя, адрес электронной почты и отметьте согласие.");
+      return;
+    }
+    if (phone && !isRuPhone(phone)) {
+      setError("Телефон, если указываете, — в формате +7 или 8xxxxxxxxxx.");
       return;
     }
     if (!captcha?.token || !captchaAnswer) {
@@ -95,7 +99,7 @@ export function LeadForm({ commentDefault = "" }: { commentDefault?: string }) {
   if (status === "ok") {
     return (
       <div className={`${panel} p-6 sm:p-8`}>
-        <p className="text-lg font-medium text-foreground">Заявка принята. Перезвоним или напишем.</p>
+        <p className="text-lg font-medium text-foreground">Заявка принята. Напишем на почту или перезвоним.</p>
         <a href={site.phoneHref} className="mt-3 block text-accent hover:text-accent-hover">
           {site.phone}
         </a>
@@ -117,10 +121,21 @@ export function LeadForm({ commentDefault = "" }: { commentDefault?: string }) {
         <input name="name" required autoComplete="name" className={fieldClass} />
       </label>
       <label className="grid gap-1 text-sm text-muted">
+        Электронная почта
+        <input
+          name="email"
+          required
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          placeholder="name@company.ru"
+          className={fieldClass}
+        />
+      </label>
+      <label className="grid gap-1 text-sm text-muted">
         Телефон
         <input
           name="phone"
-          required
           type="tel"
           inputMode="tel"
           autoComplete="tel"
@@ -128,15 +143,6 @@ export function LeadForm({ commentDefault = "" }: { commentDefault?: string }) {
           className={fieldClass}
         />
       </label>
-      <fieldset className="grid gap-2 text-sm text-muted">
-        <legend>Кто вы</legend>
-        {leadClients.map((item) => (
-          <label key={item.value} className="flex items-center gap-2 text-foreground">
-            <input type="radio" name="client" value={item.value} required />
-            {item.label}
-          </label>
-        ))}
-      </fieldset>
       <label className="grid gap-1 text-sm text-muted">
         Тип задачи
         <select name="task" required defaultValue="" className={fieldClass}>
