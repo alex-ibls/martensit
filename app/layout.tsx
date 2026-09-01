@@ -49,10 +49,6 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    icons: {
-      icon: site.logoMark,
-      apple: "/brand/icon-180.png",
-    },
     ...(site.googleVerification || site.yandexVerification
       ? {
           verification: {

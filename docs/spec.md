@@ -94,7 +94,7 @@ H1 на странице: «Мартенсит» + слоган «завод с�
 
 Фирменный стиль с официального lockup, визуально ближе к промышленному корпоративному сайту (ориентир: kzgroup.ru), без копирования их красно-жёлтого бренда:
 
-- Знак: геометрическая циан-бабочка, `public/brand/mark.png` (прозрачный фон). На светлой и тёмной теме один и тот же знак.
+- Знак: геометрическая циан-бабочка, `public/brand/mark.png` (прозрачный фон). На светлой и тёмной теме один и тот же знак. Favicon: `app/favicon.ico`, `app/icon.png`, `app/apple-icon.png` (тот же знак).
 - Слово «Мартенсит» наборное (Oswald, капитель), не PNG-wordmark.
 - Тело текста: Geologica.
 - Полный lockup: `public/brand/lockup.png` — для JSON-LD и светлого фона.
@@ -107,7 +107,6 @@ H1 на странице: «Мартенсит» + слоган «завод с�
 ## SEO
 
 - Metadata API: title, description, keywords, Open Graph, canonical. `og:image` — абсолютный URL (`NEXT_PUBLIC_SITE_URL` или хост запроса), JPEG 1200×630, `og:image:type`, `vk:image`. Без публичного HTTPS-адреса превью в Telegram и других мессенджерах не соберётся.
-- JSON-LD: `LocalBusiness` + `Manufacturer`, `areaServed` Россия и Воронеж, без `streetAddress` и `geo`. `sameAs`: Telegram. FAQ синхронизирован со страницей.
 - JSON-LD: `LocalBusiness` + `Manufacturer`, `areaServed` Россия и Воронеж, без `streetAddress` и `geo`. `sameAs`: Telegram. FAQ синхронизирован со страницей.
 - Один H1. Секции — H2.
 - Яндекс.Метрика: счётчик `111903056`. Коды верификации Вебмастера / Search Console — когда заказчик даст.
