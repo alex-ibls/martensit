@@ -66,6 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <meta name="yandex-verification" content="b4756c0294bb5702" />
+        <link rel="icon" href="/favicon.ico?favicon.0d24qa9vw226p.ico"  type="image/x-icon"/>
       </head>
       <body className="min-h-full bg-background font-sans text-foreground">
         <a
